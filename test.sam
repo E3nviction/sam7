@@ -1,0 +1,77 @@
+// $ is memory address, & is register address
+
+// Load into Registers
+// Regs: A=math, B=math, C=results, X=syscalls, E=multi-purpose register, ZZ=param store
+LDI A 100
+LDI B 011
+
+// Load into Memory
+LTM $101 100
+LTM $110 $101
+
+// Sys call
+// Calls:
+// 0:null
+// 1:push
+// 2:print
+// 3:exit
+// 4:println
+
+// 100 = 4 = println
+LDI X 100
+
+// add 100 and end to make it a string
+LDI ZZ "H"
+LDI ZZ "e"
+LDI ZZ "l"
+LDI ZZ "l"
+LDI ZZ "o"
+// null terminator
+LDI ZZ 0
+
+// run syscall
+LDI X 1
+
+BN .continue
+
+// This would loop infinitely
+.loop
+	LDI X 100
+	LDI X 1
+	BN .loop
+
+.continue // But this skips the loop
+
+	LDI ZZ 01100000 // 01100000 = 96 = Clear stack
+
+	// Won't print anything, but a new line
+	LDI X 100
+	LDI X 1
+
+	// Manifest ; Unreachable
+	.labels
+		LDI A $000
+		LDI B $001
+		CMP EQUAL // Compare &A and &B
+		RTM $101 C
+		BIF .exitwithprint // Branches to labels if cmp returns true (saved in &C)
+
+BN .exit
+.exitwithprint
+	LDI ZZ "E"
+	LDI ZZ "x"
+	LDI ZZ "i"
+	LDI ZZ "t"
+	LDI ZZ "i"
+	LDI ZZ "n"
+	LDI ZZ "g"
+	LDI ZZ "."
+	LDI ZZ "."
+	LDI ZZ "."
+	LDI ZZ 0
+	LDI X 100
+	LDI X 1
+	BN .exit
+
+.exit
+	BRK

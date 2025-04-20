@@ -2,6 +2,8 @@
 
 Welcome to the **SAM7 Emulator**! This project was a fun school project designed to emulate a simple esoteric assembly-like language with basic memory and register operations. The emulator is written in Python and provides a way to execute `.sam` files with custom instructions.
 
+And yes, this is just a really simple rewrite of the original SAM esoteric-lang.
+
 ---
 
 ## Features
